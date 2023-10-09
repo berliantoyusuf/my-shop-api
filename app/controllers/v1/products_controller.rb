@@ -6,10 +6,7 @@ class V1::ProductsController < ApplicationController
   end
 
   def create
-    product = Product.new(
-      name: prod_params[:name],
-      description: prod_params[:description]
-    )
+    product = Product.new(product_params)
 
     if product.save
       render json: product, status: 200
@@ -27,7 +24,7 @@ class V1::ProductsController < ApplicationController
   end
 
   def update
-    if @product.update!(prod_params)
+    if @product.update!(product_params)
       render json: {"message": "data has been updated", "product": @product}, status: 200
     else
       render json:  {error: "There's no product with that ID"}, status: 404
@@ -48,12 +45,12 @@ class V1::ProductsController < ApplicationController
 
 
   private
-  def prod_params
+  def product_params
     params.require(:product)
-          .permit([
-            :name,
-            :description
-          ])
+          .permit(:name,
+                  :description,
+                  material_price_attributes: [:name, :quantity, :currency, :price, :products_id]
+          )
   end
 
   def find_product
