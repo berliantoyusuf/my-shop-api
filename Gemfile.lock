@@ -85,6 +85,9 @@ GEM
     irb (1.8.1)
       rdoc
       reline (>= 0.3.8)
+    jbuilder (2.11.5)
+      actionview (>= 5.0.0)
+      activesupport (>= 5.0.0)
     loofah (2.21.3)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -174,6 +177,7 @@ PLATFORMS
 DEPENDENCIES
   bootsnap
   debug
+  jbuilder
   pg (~> 1.1)
   pry (~> 0.14.2)
   puma (~> 5.0)
@@ -184,4 +188,4 @@ RUBY VERSION
    ruby 3.0.0p0
 
 BUNDLED WITH
-   2.2.3
+   2.4.20

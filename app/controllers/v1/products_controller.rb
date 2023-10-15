@@ -16,18 +16,20 @@ class V1::ProductsController < ApplicationController
   end
 
   def show
-    if @product
-      render json: @product, status: 200
-    else
+    if @product.blank?
       render json:  {error: "There's no product with that ID"}, status: 404
+    else
+      @material_prices = @product.material_prices
     end
   end
 
   def update
-    if @product.update!(product_params)
-      render json: {"message": "data has been updated", "product": @product}, status: 200
-    else
+    if @product.blank?
       render json:  {error: "There's no product with that ID"}, status: 404
+    else
+      @product.update!(product_params)
+      @material_prices = @product.material_prices
+      render :show
     end
   end
 
@@ -49,7 +51,7 @@ class V1::ProductsController < ApplicationController
     params.require(:product)
           .permit(:name,
                   :description,
-                  material_price_attributes: [:name, :quantity, :currency, :price, :products_id]
+                  material_prices_attributes: [:id, :name, :quantity, :currency, :price, :products_id]
           )
   end
 
